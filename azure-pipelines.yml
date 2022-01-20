@@ -28,12 +28,17 @@ stages:
                       command: "build"
                       arguments: "-a -o demo"
                   displayName: "Build Go app"
-                - script: |
-                      ls
-                  displayName: "Check files"
+                - publish: ./demo
+                  artifact: demo
+                  displayName: "Publish pipeline artifact"
+    - stage: "Run"
+      displayName: Donwload and Run
+      jobs:
           - job: Run
             displayName: Run binary after Build
             steps:
+                - download: current
+                  artifact: demo
                 - script: |
                       ./demo
             dependsOn: BuildTest
