@@ -28,7 +28,7 @@ stages:
                       command: "build"
                       arguments: "-a -o demo"
                   displayName: "Build Go app"
-                - publish: ./demo
+                - publish: "$(Build.SourcesDirectory)/demo"
                   artifact: demo
                   displayName: "Publish pipeline artifact"
     - stage: "Run"
@@ -40,4 +40,14 @@ stages:
                 - download: current
                   artifact: demo
                 - script: |
+                      ls $(Agent.BuildDirectory)
+                - task: CopyFiles@2
+                  inputs:
+                      sourceFolder: "$(Agent.BuildDirectory)/demo"
+                      CleanTargetFolder: false
+                      Contents: demo
+                      TargetFolder: "$(Build.SourcesDirectory)"
+                  displayName: "Copy executable to source code folder"
+                - script: |
+                      ls
                       ./demo
