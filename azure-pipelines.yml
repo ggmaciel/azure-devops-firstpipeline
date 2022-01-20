@@ -11,13 +11,16 @@ pool:
 
 steps:
     - task: GoTool@0
+      displayName: Install Go
       inputs:
           version: "1.17"
     - task: Go@0
+      displayName: Build
       inputs:
           command: "build"
           workingDirectory: "$(System.DefaultWorkingDirectory)"
     - task: Go@0
+      displayName: Test
       inputs:
           command: "test"
           arguments: "-v"
