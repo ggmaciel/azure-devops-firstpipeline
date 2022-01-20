@@ -28,3 +28,8 @@ stages:
                       command: "build"
                       arguments: "-a -o demo"
                   displayName: "Build Go app"
+          - job: Run
+            displayName: Run binary after Build
+            steps:
+                - script: |
+                      ./demo
