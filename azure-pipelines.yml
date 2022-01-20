@@ -39,8 +39,6 @@ stages:
             steps:
                 - download: current
                   artifact: demo
-                - script: |
-                      ls $(Agent.BuildDirectory)
                 - task: CopyFiles@2
                   inputs:
                       sourceFolder: "$(Agent.BuildDirectory)/demo"
@@ -50,4 +48,6 @@ stages:
                   displayName: "Copy executable to source code folder"
                 - script: |
                       ls
+                      chmod +x ./demo
                       ./demo
+                  displayName: "Change permissions and run"
