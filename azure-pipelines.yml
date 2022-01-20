@@ -28,9 +28,6 @@ stages:
                       command: "build"
                       arguments: "-a -o demo"
                   displayName: "Build Go app"
-                - publish: $(System.DefaultWorkingDirectory)/demo"
-                  artifact: "Executable"
-                  displayName: "Publish pipeline artifact"
                 - script: |
                       ls
                   displayName: "Check files"
