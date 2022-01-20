@@ -41,4 +41,3 @@ stages:
                   artifact: demo
                 - script: |
                       ./demo
-            dependsOn: BuildTest
