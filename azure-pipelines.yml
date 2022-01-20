@@ -9,19 +9,22 @@ trigger:
 pool:
     vmImage: ubuntu-latest
 
-steps:
-    - task: GoTool@0
-      displayName: Install Go
-      inputs:
-          version: "1.17"
-    - task: Go@0
-      displayName: Build
-      inputs:
-          command: "build"
-          workingDirectory: "$(System.DefaultWorkingDirectory)"
-    - task: Go@0
-      displayName: Test
-      inputs:
-          command: "test"
-          arguments: "-v"
-          workingDirectory: "$(modulePath)"
+stages:
+    - stage: "BuildTest"
+      displayName: Build and Test
+      jobs:
+          - job: BuildTest
+            displayName: Build and Test
+            steps:
+                - task: GoTool@0
+                  inputs:
+                      version: "1.17"
+                  displayName: "Install and select Go version $1.17"
+                - script: |
+                      go test -v .
+                  displayName: "Run unit tests"
+                - task: Go@0
+                  inputs:
+                      command: "build"
+                      arguments: "-a -o demo"
+                  displayName: "Build Go app"
