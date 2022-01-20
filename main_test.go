@@ -8,7 +8,7 @@ func TestHelloWorldLen(t *testing.T) {
 		want int
 	}{{
 		name: "Hello World Len",
-		want: 11,
+		want: 2,
 	}}
 
 	for _, tt := range tests {
