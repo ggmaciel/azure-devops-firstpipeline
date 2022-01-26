@@ -3,6 +3,7 @@ jobs:
       variables:
           imageName: $
           env: $
+          tags: $
       displayName: "Build Golang app"
       steps:
           - task: Docker@2
@@ -10,10 +11,10 @@ jobs:
             inputs:
                 repository: $(imageName)
                 command: build
-                Dockerfile: $(System.DefaultWorkingDirectory)
-                tags: $
+                Dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
+                tags: $(tags)
           - script: |
-                docker save $(imageName) > go.tar
+                docker save $(imageName):$(tags) > go.tar
           - task: PublishBuildArtifacts@1
             displayName: Publish package ready for $(env)
             inputs:
