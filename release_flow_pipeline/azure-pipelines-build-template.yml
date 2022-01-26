@@ -3,7 +3,6 @@ jobs:
       variables:
           imageName: $
           env: $
-      environment: $(env)
       displayName: "Build Golang app"
       steps:
           - task: Docker@2
