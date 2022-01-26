@@ -2,7 +2,8 @@ jobs:
     - job:
       variables:
           imageName: $
-      environment: $
+          env: $
+      environment: $(env)
       displayName: "Build Golang app"
       steps:
           - task: Docker@2
@@ -14,7 +15,7 @@ jobs:
           - script: |
                 docker save $(imageName) > go.tar
           - task: PublishBuildArtifacts@1
-            displayName: Publish package ready for $(environment)
+            displayName: Publish package ready for $(env)
             inputs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"

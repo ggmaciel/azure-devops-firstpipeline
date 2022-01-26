@@ -15,7 +15,7 @@ stages:
           - template: ../azure-pipelines-build-template.yml
             parameters:
                 imageName: golang-azure-$(Environment)-$(Build.SourceVersion)
-                environment: $(Environment)
+                env: $(Environment)
 
     - stage: RunDEV
       displayName: Run container
