@@ -1,0 +1,53 @@
+# Go
+# Build your Go project.
+# Add steps that test, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/go
+
+trigger:
+    - main
+
+pool:
+    vmImage: ubuntu-latest
+
+stages:
+    - stage: "BuildTest"
+      displayName: Build and Test
+      jobs:
+          - job: BuildTest
+            displayName: Build and Test
+            steps:
+                - task: GoTool@0
+                  inputs:
+                      version: "1.17"
+                  displayName: "Install and select Go version $1.17"
+                - script: |
+                      go test -v .
+                  displayName: "Run unit tests"
+                - task: Go@0
+                  inputs:
+                      command: "build"
+                      arguments: "-a -o demo"
+                  displayName: "Build Go app"
+                - publish: "$(Build.SourcesDirectory)/demo"
+                  artifact: demo
+                  displayName: "Publish pipeline artifact"
+    - stage: "Run"
+      displayName: Donwload and Run
+      jobs:
+          - job: Run
+            displayName: Run binary after Build
+            steps:
+                - download: current
+                  artifact: demo
+                - task: CopyFiles@2
+                  inputs:
+                      sourceFolder: "$(Agent.BuildDirectory)/demo"
+                      CleanTargetFolder: false
+                      Contents: demo
+                      TargetFolder: "$(Build.SourcesDirectory)"
+                  displayName: "Copy executable to source code folder"
+                - script: |
+                      ls
+                      chmod +x ./demo
+                      ./demo
+                  displayName: "Change permissions and run"
