@@ -16,7 +16,7 @@ stages:
                 tags: "$(Build.SourceVersion)"
 
     - stage: RunDEV
-      displayName: Run container
+      displayName: Run Container in DEV
       variables:
           - group: "golang-dev-env-variable-group"
       jobs:
@@ -24,5 +24,4 @@ stages:
             displayName: Running docker run
             steps:
                 - script: |
-                      ls
-                      echo "hello docker in $(Environment)"
+                      docker images
