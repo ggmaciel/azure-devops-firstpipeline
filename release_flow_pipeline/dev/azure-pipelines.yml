@@ -32,5 +32,6 @@ stages:
                       downloadPath: "$(System.DefaultWorkingDirectory)"
 
                 - script: |
-                      ls ./image
-                  displayName: Checking files
+                      docker load < ./image/go.tar
+                      docker images
+                  displayName: Loading docker image
