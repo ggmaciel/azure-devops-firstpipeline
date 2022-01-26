@@ -19,3 +19,9 @@ stages:
 
     - stage: RunDEV
       displayName: Run container
+      jobs:
+          - job:
+            displayName: Running docker run
+            steps:
+                - script: |
+                      echo "hello docker"
