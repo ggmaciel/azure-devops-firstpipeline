@@ -33,5 +33,5 @@ stages:
 
                 - script: |
                       docker load < ./image/go.tar
-                      docker images
+                      docker run golang-azure:$(Build.SourceVersion)
                   displayName: Loading docker image
