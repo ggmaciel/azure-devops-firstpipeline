@@ -11,9 +11,9 @@ stages:
           - group: "golang-dev-env-variable-group"
       jobs:
           - template: ../azure-pupelines-build-template.yml
-      parameters:
-          imageName: golang-azure-$(Environment)-$(Build.SourceVersion)
-          environment: $(Environment)
+            parameters:
+                imageName: golang-azure-$(Environment)-$(Build.SourceVersion)
+                environment: $(Environment)
 
     - stage: RunDEV
       displayName: Run container
