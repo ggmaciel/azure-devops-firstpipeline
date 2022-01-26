@@ -29,7 +29,9 @@ stages:
     - stage: DeployPROD
       displayName: "Deploy to PROD environment"
       condition: succeeded()
-      dependsOn: Build
+      dependsOn:
+          - Build
+          - DeployDEV
       variables:
           - group: "golang-prod-env-variable-group"
       jobs:
