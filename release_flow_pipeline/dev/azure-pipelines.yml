@@ -14,7 +14,7 @@ stages:
       jobs:
           - template: ../azure-pipelines-build-template.yml
             parameters:
-                repository: "golang-azure-$(Environment)"
+                imageName: "golang-azure-$(Environment)"
                 tags: "$(Build.SourceVersion)"
                 environment: "$(Environment)"
     - stage: RunDEV
