@@ -1,0 +1,23 @@
+jobs:
+    - deployment: Deploy
+      display: "Deploy Golang App"
+      environment: $
+      strategy:
+          runOnce:
+              deploy:
+                  steps:
+                      - task: DownloadBuildArtifacts@0
+                        displayName: "Download the build artifacts"
+                        inputs:
+                            buildType: "current"
+                            downloadType: "single"
+                            artifactName: "image"
+                            downloadPath: "$(System.DefaultWorkingDirectory)"
+
+                      - script: |
+                            docker load < ./image/go.tar
+                        displayName: Loading docker image
+
+                      - script: |
+                            docker run golang-azure:$(Build.SourceVersion)
+                        displayName: Running app
