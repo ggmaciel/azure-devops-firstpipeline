@@ -1,7 +1,11 @@
+parameters:
+    - name: environment # name of the parameter; required
+      type: string # data type of the parameter; required
+      default: false
 jobs:
     - deployment: Deploy
       displayName: "Deploy Golang App"
-      environment: $
+      environment: ${{ parameters.environment }}
       strategy:
           runOnce:
               deploy:
