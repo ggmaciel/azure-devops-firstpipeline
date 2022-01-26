@@ -7,8 +7,24 @@ pool:
     vmImage: ubuntu-latest
 
 stages:
+    - stage: Test
+      displayName: Test Golang App
+      jobs:
+          - job: Test
+            displayName: Test Golang App
+            steps:
+                - task: GoTool@0
+                  inputs:
+                      version: "1.17"
+                  displayName: "Install and select Go version $1.17"
+                - script: |
+                      go test -v $(System.DefaultWorkingDirectory)
+                  displayName: "Run unit tests"
+
     - stage: Build
       displayName: "Build Golang App"
+      condition: succeeded()
+      dependsOn: Test
       jobs:
           - template: azure-pipelines-build-template.yml
             parameters:
