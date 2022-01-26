@@ -16,6 +16,7 @@ stages:
             parameters:
                 repository: "golang-azure-$(Environment)"
                 tags: "$(Build.SourceVersion)"
+                environment: "$(Environment)"
     - stage: RunDEV
       displayName: Run container
       jobs:

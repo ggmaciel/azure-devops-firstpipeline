@@ -1,3 +1,13 @@
+parameters:
+    - name: imageName # name of the parameter; required
+      type: string # data type of the parameter; required
+      default: false
+    - name: tags
+      type: string
+      default: false
+    - name: environment
+      type: string
+      default: false
 jobs:
     - job:
       displayName: "Build Golang app"
@@ -5,15 +15,15 @@ jobs:
           - task: Docker@2
             displayName: Build image
             inputs:
-                repository: $
+                repository: ${{ parameters.imageName }}
                 command: build
                 Dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
-                tags: $
+                tags: ${{ parameters.tags }}
           - script: |
                 docker images
-                docker save $(parameters.imageName):$(parameters.tags) > go.tar
+                docker save ${{ parameters.imageName }}:${{ parameters.tags }} > go.tar
           - task: PublishBuildArtifacts@1
-            displayName: Publish package ready for dev
+            displayName: Publish package ready for ${{ parameters.environment }}
             inputs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"
