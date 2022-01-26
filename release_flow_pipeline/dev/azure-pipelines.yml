@@ -8,20 +8,21 @@ pool:
 
 stages:
     - stage: Build
-      displayName: "Build Golang App in dev environment"
-      variables:
-          - group: "golang-dev-env-variable-group"
+      displayName: "Build Golang App"
       jobs:
           - template: ../azure-pipelines-build-template.yml
             parameters:
-                imageName: "golang-azure-$(Environment)"
+                imageName: "golang-azure"
                 tags: "$(Build.SourceVersion)"
-                environment: "$(Environment)"
+
     - stage: RunDEV
       displayName: Run container
+      variables:
+          - group: "golang-dev-env-variable-group"
       jobs:
           - job:
             displayName: Running docker run
             steps:
                 - script: |
-                      echo "hello docker"
+                      ls
+                      echo "hello docker in $(Environment)"

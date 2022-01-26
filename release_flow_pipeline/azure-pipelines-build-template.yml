@@ -5,9 +5,6 @@ parameters:
     - name: tags
       type: string
       default: false
-    - name: environment
-      type: string
-      default: false
 jobs:
     - job:
       displayName: "Build Golang app"
@@ -20,7 +17,6 @@ jobs:
                 Dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
                 tags: ${{ parameters.tags }}
           - script: |
-                docker images
                 docker save ${{ parameters.imageName }}:${{ parameters.tags }} > go.tar
           - task: PublishBuildArtifacts@1
             displayName: Publish package ready for ${{ parameters.environment }}
@@ -28,4 +24,4 @@ jobs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"
           - script: |
-                docker images
+                ls
