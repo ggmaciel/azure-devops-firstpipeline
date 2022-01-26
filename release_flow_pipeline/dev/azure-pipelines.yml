@@ -30,6 +30,7 @@ stages:
                       downloadType: "single"
                       artifactName: "image"
                       downloadPath: "$(System.DefaultWorkingDirectory)"
+
                 - script: |
-                      ls
+                      ls ./image
                   displayName: Checking files
