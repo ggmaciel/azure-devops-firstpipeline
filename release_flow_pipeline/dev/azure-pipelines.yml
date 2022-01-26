@@ -23,5 +23,13 @@ stages:
           - job:
             displayName: Running docker run
             steps:
+                - task: DownloadBuildArtifacts@0
+                  displayName: "Download the build artifacts"
+                  inputs:
+                      buildType: "current"
+                      downloadType: "single"
+                      artifactName: "image"
+                      downloadPath: "$(System.DefaultWorkingDirectory)"
                 - script: |
-                      docker images
+                      ls
+                  displayName: Checking files
