@@ -25,3 +25,14 @@ stages:
           - template: azure-pipelines-deployment-template.yml
             parameters:
                 environment: "DEV"
+
+    - stage: DeployPROD
+      displayName: "Deploy to PROD environment"
+      condition: succeeded()
+      dependsOn: Build
+      variables:
+          - group: "golang-prod-env-variable-group"
+      jobs:
+          - template: azure-pipelines-deployment-template.yml
+            parameters:
+                environment: "PROD"
