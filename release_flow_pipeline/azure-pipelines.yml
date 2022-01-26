@@ -24,4 +24,4 @@ stages:
       jobs:
           - template: azure-pipelines-deployment-template.yml
             parameters:
-                environment: "$(Environment)"
+                environment: "DEV"
