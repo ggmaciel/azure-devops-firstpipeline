@@ -1,6 +1,6 @@
 jobs:
     - job:
-      variables:
+      parameters:
           imageName: $
           env: $
           tags: $
@@ -9,14 +9,14 @@ jobs:
           - task: Docker@2
             displayName: Build image
             inputs:
-                repository: $(variables.imageName)
+                repository: $(parameters.imageName)
                 command: build
                 Dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
-                tags: $(variables.tags)
+                tags: $(parameters.tags)
           - script: |
-                docker save $(variables.imageName):$(variables.tags) > go.tar
+                docker save $(parameters.imageName):$(parameters.tags) > go.tar
           - task: PublishBuildArtifacts@1
-            displayName: Publish package ready for $(variables.env)
+            displayName: Publish package ready for $(parameters.env)
             inputs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"
