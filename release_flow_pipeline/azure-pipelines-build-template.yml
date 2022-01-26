@@ -11,6 +11,7 @@ jobs:
                 repository: $(imageName)
                 command: build
                 Dockerfile: $(System.DefaultWorkingDirectory)
+                tags: $
           - script: |
                 docker save $(imageName) > go.tar
           - task: PublishBuildArtifacts@1
