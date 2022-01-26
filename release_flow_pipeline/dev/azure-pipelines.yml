@@ -10,7 +10,7 @@ stages:
       variables:
           - group: "golang-dev-env-variable-group"
       jobs:
-          - template: ../azure-pupelines-build-template.yml
+          - template: ../azure-pipelines-build-template.yml
             parameters:
                 imageName: golang-azure-$(Environment)-$(Build.SourceVersion)
                 environment: $(Environment)
