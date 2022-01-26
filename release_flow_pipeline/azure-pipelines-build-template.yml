@@ -16,12 +16,16 @@ jobs:
                 command: build
                 Dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
                 tags: ${{ parameters.tags }}
+
           - script: |
                 docker save ${{ parameters.imageName }}:${{ parameters.tags }} > go.tar
+
           - task: PublishBuildArtifacts@1
-            displayName: Publish package ready for ${{ parameters.environment }}
+
+            displayName: Publish package ready
             inputs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"
+
           - script: |
                 ls
