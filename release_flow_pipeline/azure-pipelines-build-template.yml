@@ -18,3 +18,5 @@ jobs:
             inputs:
                 PathtoPublish: "$(System.DefaultWorkingDirectory)/go.tar"
                 artifactName: "image"
+          - script: |
+                docker images
